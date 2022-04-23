@@ -1,18 +1,20 @@
---Creci�n de base de datos
+--Creción de base de datos
 CREATE DATABASE recursos_humanos;
 
+--Selección la base de datos creada
 USE recursos_humanos;
 
---Creaci�n de tablas
+--Creación de tablas
+--DEFINIMOS TODAS LAS TABLAS COMO AUTO INCREMENTABLES
 CREATE TABLE regions (
 	region_id INT IDENTITY(1,1) PRIMARY KEY,
 	region_name VARCHAR(255)
 );
 
 CREATE TABLE countries (
-	countries INT IDENTITY(1,1) PRIMARY KEY,
+	country_id INT IDENTITY(1,1) PRIMARY KEY,
 	country_name VARCHAR(255),
-	region_id INT FOREIGN KEY REFERENCES regions(region_id)
+	region_id INT, --FK
 );
 
 CREATE TABLE locations (
@@ -21,7 +23,7 @@ CREATE TABLE locations (
 	postal_code VARCHAR(10), --se toma referencia https://www.azcodigopostal.com/
 	city VARCHAR(255),
 	state_province VARCHAR(255),
-	country_id INT FOREIGN KEY REFERENCES countries(countries) 
+	country_id INT, --FK
 );
 
 CREATE TABLE jobs(
@@ -35,34 +37,76 @@ CREATE TABLE employess (
 	employee_id INT IDENTITY(1,1) PRIMARY KEY,
 	frist_name varchar(30),
 	last_name varchar(30),
-	email VARCHAR(255) UNIQUE,
-	phoNE VARCHAR(15),
-	hire_number varchar(15),
+	email VARCHAR(255) UNIQUE, --dos empleados no pueden tener el mismo email
+	phone_number VARCHAR(15),
 	hire_date DATETIME,
 	salary MONEY,
 	commission_pct MONEY,
-	departament_id INT,
-	job_id INT FOREIGN KEY REFERENCES jobs(job_id),
-	manager_id INT FOREIGN KEY REFERENCES employess(employee_id),
-	--departament_id INT FOREIGN KEY REFERENCES departaments(departament_id),
+	job_id INT, --FK jobs(id)
+	manager_id INT NULL, --permitimos la inseción de campos nulos, ya que no todos los empleados son jefes
 );
 
 CREATE TABLE departaments (
 	departament_id INT IDENTITY(1,1) PRIMARY KEY,
 	departamen_name VARCHAR(255),
-	manager_id INT FOREIGN KEY REFERENCES employess(employee_id),
-	location_id INT FOREIGN KEY REFERENCES locations(location_id)
+	manager_id INT, --FK employess(employee_id)
+	location_id INT,
 );
 
 CREATE TABLE job_history (
 	job_historiy_id INT IDENTITY(1,1) PRIMARY KEY,
 	start_date DATETIME NOT NULL,
-	end_date DATETIME NOT NULL,
-	job_id INT FOREIGN KEY REFERENCES jobs(job_id),
-	departament_id INT FOREIGN KEY REFERENCES departaments(departament_id),
+	end_date DATETIME NULL, --PERMITIMOS CAMPOS NULOS YA QUE PODEMOS TENER EMPLEADOS QUE AUN NO RENUNCIEN
+	job_id INT, --FK
+	departament_id INT, --FK
+	employee_id INT, --FK
 ); 
 
-ALTER TABLE employess ADD CONSTRAINT FK_EMPLOYESS_DEPARTAMENTS FOREIGN KEY (departament_id) REFERENCES departaments(departament_id);
+--INSTERCIÓN DE FK POR MEDIO DE ALTER TABLE
+ALTER TABLE countries
+ADD CONSTRAINT FK_COUNTRIES_REGIONS
+FOREIGN KEY (region_id)
+REFERENCES regions(region_id);
+
+ALTER TABLE locations
+ADD CONSTRAINT FK_LOCATIONS_COUNTRIES
+FOREIGN KEY (country_id)
+REFERENCES countries(country_id);
+
+ALTER TABLE employess
+ADD CONSTRAINT FK_EMPLOYESS_JOBS
+FOREIGN KEY (job_id)
+REFERENCES jobs(job_id);
+
+ALTER TABLE employess
+ADD CONSTRAINT FK_EMPLOYESS_MANAGER
+FOREIGN KEY (manager_id)
+REFERENCES employess(employee_id);
+
+ALTER TABLE departaments
+ADD CONSTRAINT FK_DEPARTAMENTS_EMPLOYESS
+FOREIGN KEY (manager_id)
+REFERENCES employess(employee_id);
+
+ALTER TABLE departaments
+ADD CONSTRAINT FK_DEPARTAMENTS_LOCATIONS
+FOREIGN KEY (location_id)
+REFERENCES locations(location_id);
+
+ALTER TABLE job_history
+ADD CONSTRAINT FK_JOB_HISTORY_JOBS
+FOREIGN KEY (job_id)
+REFERENCES jobs(job_id);
+
+ALTER TABLE job_history
+ADD CONSTRAINT FK_JOB_HISTORY_DEPARTAMENTS
+FOREIGN KEY (departament_id)
+REFERENCES departaments(departament_id);
+
+ALTER TABLE job_history
+ADD CONSTRAINT FK_JOB_HISTORY_ENPLOYESS
+FOREIGN KEY (employee_id)
+REFERENCES employess(employee_id);
 
 --Inserci�on de datos 
 
@@ -74,8 +118,8 @@ ALTER TABLE employess ADD CONSTRAINT FK_EMPLOYESS_DEPARTAMENTS FOREIGN KEY (depa
 
 
 --Los valores hacen referencias a las columnas de la tabla
---Tenemos definida la PK como AUTO INCREMENTABLE as� que
---omitimos
+--Tenemos definida la PK como AUTO INCREMENTABLE así que
+--omitimos el campo de la inserción de PK
 
 
 --Tabla de regions
@@ -134,3 +178,6 @@ VALUES
 ('FRONT END DEVELOPER', '500', '1200'), --id 19
 ('SOPORTE TECNICO', '400', '800'), --id 20
 ('BACK END DEVELOPER', '500', '1200'); --id 21
+
+--Tabla
+INSERT INTO employess (frist_name, last_name, email, phone_number )
