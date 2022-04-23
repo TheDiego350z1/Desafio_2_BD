@@ -63,6 +63,8 @@ CREATE TABLE job_history (
 ); 
 
 --INSTERCIÓN DE FK POR MEDIO DE ALTER TABLE
+--las llaves forarenas se pueden crear al momento de crear la tabla
+--con: 
 ALTER TABLE countries
 ADD CONSTRAINT FK_COUNTRIES_REGIONS
 FOREIGN KEY (region_id)
@@ -117,7 +119,7 @@ REFERENCES employess(employee_id);
 --INSERT INTO tabla_nombre VALUES('VALUE1', 'VALUE2' ....).
 
 
---Los valores hacen referencias a las columnas de la tabla
+--Los "VALUES" hacen referencias a las columnas de la tabla
 --Tenemos definida la PK como AUTO INCREMENTABLE así que
 --omitimos el campo de la inserción de PK
 
