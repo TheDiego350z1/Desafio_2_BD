@@ -211,4 +211,20 @@ VALUES
 INSERT INTO departaments (departamen_name, manager_id, location_id)
 VALUES
 ('TI', '1', '1'),
-('BODEGA', '3', '')
+('BODEGA', '3', '2'), 
+('SALA DE VENTAS', '2', '3'),
+('CAJA', '5', '3'),
+('CONTABILIDAD', '7', '1'),
+('SALA DE VENTAS', '9', '2'),
+('SALA DE VENTAS', '12', '3'),
+('TI', '18', '4');
+
+--Selección de tablas para muestra de data
+
+SELECT * FROM regions;
+SELECT * FROM countries;
+SELECT * FROM locations;
+SELECT * FROM jobs;
+SELECT * FROM employess;
+SELECT * FROM departaments;
+SELECT * FROM job_history;
