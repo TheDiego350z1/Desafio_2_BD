@@ -43,7 +43,7 @@ CREATE TABLE employess (
 	salary MONEY,
 	commission_pct MONEY,
 	job_id INT, --FK jobs(id)
-	manager_id INT NULL, --permitimos la inseción de campos nulos, ya que no todos los empleados son jefes
+	manager_id INT NULL,
 );
 
 CREATE TABLE departaments (
@@ -110,7 +110,7 @@ ADD CONSTRAINT FK_JOB_HISTORY_ENPLOYESS
 FOREIGN KEY (employee_id)
 REFERENCES employess(employee_id);
 
---Inserci�on de datos 
+--Inserción de datos 
 
 --Sentencia insert
 --INSERT INTO tabla_nombre (id, name, ...) VALUES ('VALUE1' 'VALUE2' ...)
@@ -181,5 +181,34 @@ VALUES
 ('SOPORTE TECNICO', '400', '800'), --id 20
 ('BACK END DEVELOPER', '500', '1200'); --id 21
 
+SET DATEFORMAT dmy; --SETEAMOS EL FORMATO DE LA FECHA PARA QUE SEA DIA-MES-AÑO
+
 --Tabla
-INSERT INTO employess (frist_name, last_name, email, phone_number )
+INSERT INTO employess (frist_name, last_name, email, phone_number, hire_date, salary, commission_pct, job_id, manager_id)
+VALUES
+('DIEGO', 'CARGIA', 'DIEGO@GMAIL.COM', '73707733', '05-06-2010', '1000', '0', '21', '1'), --id 1 bk dev(job)
+('ANTONIO', 'RIVAS', 'ANTONIO@GMAIL.COM', '76882983', '02-02-2016', '600', '100', '3', '2'), --id 2 (JE- SCURISAL id(job) 3)
+('HERNESTO', 'HERNANDEZ', 'HERNANDEZ@GMAIL.COM', '79378530', '28-08-2010', '400', '0', '6', '3'), --id 3 JEFE DE BODEGA job(id) 6
+('JUAN', 'MONTE ROSA', 'MONTE_ROSAJUAN@GMAIL.COM', '76879083', '05-05-2013', '400', '0', '5', '3'), --id 4 ASISTENTE DE BODEGA job(id) 5
+('HERNESTO', 'SOSA', 'SOSA@GMAIL.COM', '76998835', '10-10-2020', '750', '0', '17', '5'), --id 5 JEFE DE CAJA job(id) 17
+('ANA', 'IBARRA', 'IBARRAANA@GMAIL.COM', '74857083', '05-06-2021', '400', '50', '16', '5'), --id 6 CAJA job(id) 17
+('EVA', 'ROSALES', 'EVA@GMAIL.COM', '73996801', '17-07-2017', '900', '0', '7', '7'), --id 7 CONTADOR job(id) 7
+('LUZ', 'SARAVIA', 'SARAVIA@GMAIL.COM', '74931788', '05-08-2013', '600', '0', '8', '7'), --id 8 ASISTENTE DE BODEGA job(id) 5
+('RAUL', 'HERNANDEZ', 'RAUL_HERNANDEZ@GMAIL.COM', '79895083', '15-03-2020', '500', '0', '3', '9'), --id 9 JEFE DE SUCURSAL job(id) 3
+('KAREN', 'MARTINEZ', 'MARTINEZKAREN@GMAIL.COM', '74883457', '06-08-2014', '400', '0', '2', '9'), --id 10 ASISTENTE DE VENTA job(id) 2
+('ALBA', 'ALBARADO', 'ALBARADO@GMAIL.COM', '72998576', '05-06-2013', '400', '0', '2', '9'), --id 11 ASISTENTE DE VENTA job(id) 2
+('MANUEL', 'LOPEZ', 'LOPEZMANUEL@GMAIL.COM', '79004567', '08-05-2018', '500', '0', '3', '12'), --id 12 JEFE DE SUCURSAL job(id) 3
+('JORGE', 'ROSALES', 'JORGE_ROSALES@GMAIL.COM', '73289977', '07-08-2014', '400', '0', '2', '12'), --id 13 ASISTENTE DE VENTA job(id) 2
+('LUCIA', 'RIVAS', 'RIVAS_LUCIA@GMAIL.COM', '73887965', '19-08-2013', '400', '0', '2', '12'), --id 14 ASISTENTE DE VENTA job(id) 2
+('MOISES', 'LEMUEL', 'LLEMUEL@GMAIL.COM', '71586242', '07-01-2011', '400', '0', '2', '12'), --id 15 ASISTENTE DE VENTA job(id) 2
+('JOSE', 'MARTINEZ', 'JOSEMARTINEZ@GMAIL.COM', '71229977', '03-03-2013', '400', '0', '2', '12'), --id 16 ASISTENTE DE VENTA job(id) 2
+('ANTONIO', 'GARCIA', 'ANTON@GMAIL.COM', '76134789', '05-05-2013', '1200', '0', '19', '17'), --id 17 FRONT END DEVELOPER job(id) 19
+('EDGARDO', 'OSORIO', 'OSORIOEDGAR@GMAIL.COM', '75688212', '08-01-2015', '700', '0', '20', '18'), --id 18 SOPORTE TECNICO job(id) 20
+('CARLOS', 'MEJIA', 'MEJIA_CARLOS@GMAIL.COM', '73276561', '05-05-2013', '400', '0', '5', '3'), --id 19 ASISTENTE DE BODEGA job(id) 5
+('FATIMA', 'PERMA', 'PERLA@GMAIL.COM', '79882214', '05-05-2013', '400', '0', '2', '12');
+
+
+INSERT INTO departaments (departamen_name, manager_id, location_id)
+VALUES
+('TI', '1', '1'),
+('BODEGA', '3', '')
